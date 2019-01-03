@@ -10,6 +10,17 @@ namespace calibrate\caliwatch\client;
 class DefaultClient extends ClientBase {
 
   /**
+   * Send the contents of the composer.lock file.
+   *
+   * @param string $lockfileContents
+   *   The contents of the composer.lock file.
+   */
+  public function sendComposerData(string $lockfileContents) : void {
+    $contents = ['event' => 'php:send-composer-versions', 'value' => $lockfileContents];
+    $this->sendArbitraryJson('/api/event', $contents);
+  }
+
+  /**
    * Send an even when the cron is started.
    */
   public function sendCronStartedEvent() : void {}

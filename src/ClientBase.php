@@ -53,7 +53,7 @@ abstract class ClientBase {
       'type' => $type,
       'message' => $message,
     ];
-    $this->guzzle->post('/api/trigger', ['body' => json_encode($contents)]);
+    $this->sendArbitraryJson('/api/trigger', $contents);
   }
 
   /**
@@ -72,18 +72,7 @@ abstract class ClientBase {
       'event' => $eventName,
       'value' => $value,
     ];
-    $this->guzzle->post('/api/event', ['body' => json_encode($contents)]);
-  }
-
-  /**
-   * Send the contents of the composer.lock file.
-   *
-   * @param string $lockfileContents
-   *   The contents of the composer.lock file.
-   */
-  public function sendComposerData(string $lockfileContents) : void {
-    $contents = ['event' => 'php:composer-lock', 'value' => $lockfileContents];
-    $this->guzzle->post('/api/event', ['body' => json_encode($contents)]);
+    $this->sendArbitraryJson('/api/event', $contents);
   }
 
   /**
@@ -95,7 +84,7 @@ abstract class ClientBase {
    *    The array data to send, will be json_encoded before sending.
    */
   public function sendArbitraryJson(string $endpoint, array $json = []) : void {
-    $this->guzzle->post($endpoint, json_encode($json));
+    $this->guzzle->post($endpoint, ['body' => json_encode($json)]);
   }
 
 }
