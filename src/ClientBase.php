@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace calibrate\caliwatch\client;
 
+use \GuzzleHttp\Client;
+
 /**
  * Contains the base implementations to send data to caliwatch.
  */
@@ -24,7 +26,7 @@ abstract class ClientBase {
    */
   public function __construct(string $token) {
     $this->guzzle = new Client([
-      'base_uri' => 'http://caliwatch-2.calidev.in/api/',
+      'base_uri' => 'http://caliwatch-2.calidev.in/',
       'timeout' => 0,
       'allow_redirects' => FALSE,
       'headers' => ['Caliwatch-Token' => $token],
@@ -51,7 +53,7 @@ abstract class ClientBase {
       'type' => $type,
       'message' => $message,
     ];
-    $this->guzzle->post('/trigger', ['body' => json_encode($contents)]);
+    $this->guzzle->post('/api/trigger', ['body' => json_encode($contents)]);
   }
 
   /**
@@ -70,7 +72,7 @@ abstract class ClientBase {
       'event' => $eventName,
       'value' => $value,
     ];
-    $this->guzzle->post('/event', ['body' => json_encode($contents)]);
+    $this->guzzle->post('/api/event', ['body' => json_encode($contents)]);
   }
 
   /**
@@ -81,7 +83,7 @@ abstract class ClientBase {
    */
   public function sendComposerData(string $lockfileContents) : void {
     $contents = ['event' => 'php:composer-lock', 'value' => $lockfileContents];
-    $this->guzzle->post('/event', ['body' => json_encode($contents)]);
+    $this->guzzle->post('/api/event', ['body' => json_encode($contents)]);
   }
 
   /**
