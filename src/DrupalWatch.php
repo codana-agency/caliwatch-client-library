@@ -12,12 +12,16 @@ class DrupalWatch extends DefaultClient {
   /**
    * Send an event when the maintenance mode is turned on.
    */
-  public function sendMaintenanceModeOnEvent() : void {}
+  public function sendMaintenanceModeOnEvent() : void {
+    $this->sendEvent('drupal:maintenance-mode', 'on');
+  }
 
   /**
    * Send an event when the maintenance mode is turned off.
    */
-  public function sendMaintenanceModeOffEvent() : void {}
+  public function sendMaintenanceModeOffEvent() : void {
+    $this->sendEvent('drupal:maintenance-mode', 'off');
+  }
 
   /**
    * Send an event when the config is imported.

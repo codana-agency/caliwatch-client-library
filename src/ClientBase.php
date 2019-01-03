@@ -10,6 +10,28 @@ namespace calibrate\caliwatch\client;
 abstract class ClientBase {
 
   /**
+   * The guzzle client.
+   *
+   * @var \GuzzleHttp\Client
+   */
+  private $guzzle;
+
+  /**
+   * Creates a new instance of this class.
+   *
+   * @param string $token
+   *   The caliwatch token for this site instance.
+   */
+  public function __construct(string $token) {
+    $this->guzzle = new Client([
+      'base_uri' => 'http://caliwatch-2.calidev.in/api/',
+      'timeout' => 0,
+      'allow_redirects' => FALSE,
+      'headers' => ['Caliwatch-Token' => $token],
+    ]);
+  }
+
+  /**
    * Sends a trigger to caliwatch.
    *
    * These triggers can be sent directly to slack and should be used for
@@ -24,7 +46,13 @@ abstract class ClientBase {
    *   success|info|warning|error|critical|reminder.
    *   Defaults to error.
    */
-  public function sendTrigger(string $message, string $type = 'error') : void {}
+  public function sendTrigger(string $message, string $type = 'error') : void {
+    $contents = [
+      'type' => $type,
+      'message' => $message,
+    ];
+    $this->guzzle->post('/trigger', ['body' => json_encode($contents)]);
+  }
 
   /**
    * Send an event to caliwatch.
@@ -37,7 +65,13 @@ abstract class ClientBase {
    * @param string $value
    *   The value of this event, as a string.
    */
-  public function sendEvent(string $eventName, string $value) : void {}
+  public function sendEvent(string $eventName, string $value) : void {
+    $contents = [
+      'event' => $eventName,
+      'value' => $value,
+    ];
+    $this->guzzle->post('/event', ['body' => json_encode($contents)]);
+  }
 
   /**
    * Send the contents of the composer.lock file.
