@@ -79,7 +79,10 @@ abstract class ClientBase {
    * @param string $lockfileContents
    *   The contents of the composer.lock file.
    */
-  public function sendComposerData(string $lockfileContents) : void {}
+  public function sendComposerData(string $lockfileContents) : void {
+    $contents = ['event' => 'php:composer-lock', 'value' => $lockfileContents];
+    $this->guzzle->post('/event', ['body' => json_encode($contents)]);
+  }
 
   /**
    * Send arbitrary data as json to an endpoint on the backend.
@@ -89,6 +92,8 @@ abstract class ClientBase {
    * @param array $json
    *    The array data to send, will be json_encoded before sending.
    */
-  public function sendArbitraryJson(string $endpoint, array $json = []) : void {}
+  public function sendArbitraryJson(string $endpoint, array $json = []) : void {
+    $this->guzzle->post($endpoint, json_encode($json));
+  }
 
 }
