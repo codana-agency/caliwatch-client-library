@@ -23,7 +23,10 @@ class DefaultClient extends ClientBase {
   /**
    * Send an even when the cron is started.
    */
-  public function sendCronStartedEvent() : void {}
+  public function sendCronStartedEvent() : void {
+    $contents = ['event' => 'php:cron-ran', 'value' => (string) time()];
+    $this->sendArbitraryJson('/api/event', $contents);
+  }
 
   /**
    * Send a trigger when a fatal error is registred.
