@@ -10,4 +10,14 @@
             "calibrate\\caliwatch\\client\\": "src/"
         }
     }
+    "authors": [
+        {
+            "name": "Steven Van den Hout",
+            "email": "steven.vandenhout@calibrate.be"
+        },
+        {
+            "name": "Joris Vercammen",
+            "email": "joris.vercammen@calibrate.be"
+        }
+    ]
 }
