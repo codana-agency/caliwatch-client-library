@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace calibrate\caliwatch\client;
 
+use calibrate\caliwatch\client\Exception\InvalidTokenException;
 use \GuzzleHttp\Client;
 
 /**
@@ -20,11 +21,12 @@ abstract class ClientBase {
 
   /**
    * Creates a new instance of this class.
-   *
-   * @param string $token
-   *   The caliwatch token for this site instance.
    */
-  public function __construct(string $token) {
+  public function __construct() {
+    $token = getenv('CALIWATCH_TOKEN');
+    if ($token === FALSE || strlen($token) === 0) {
+      throw new InvalidTokenException("No CALIWATCH_TOKEN found in environment variables, use putenv to set one");
+    }
     $this->guzzle = new Client([
       'base_uri' => 'http://caliwatch-2.calidev.in/',
       'timeout' => 0,
