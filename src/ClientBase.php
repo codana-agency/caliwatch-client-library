@@ -1,92 +1,94 @@
-<?php
-
-declare(strict_types=1);
+<?php declare(strict_types=1);
 
 namespace calibrate\caliwatch\client;
 
 use calibrate\caliwatch\client\Exception\InvalidTokenException;
-use \GuzzleHttp\Client;
+use GuzzleHttp\Client;
 
 /**
  * Contains the base implementations to send data to caliwatch.
  */
-abstract class ClientBase {
+abstract class ClientBase
+{
 
-  /**
-   * The guzzle client.
-   *
-   * @var \GuzzleHttp\Client
-   */
-  private $guzzle;
+    /**
+     * The guzzle client.
+     *
+     * @var \GuzzleHttp\Client
+     */
+    private $guzzle;
 
-  /**
-   * Creates a new instance of this class.
-   */
-  public function __construct() {
-    $token = getenv('CALIWATCH_TOKEN');
-    if ($token === FALSE || strlen($token) === 0) {
-      throw new InvalidTokenException("No CALIWATCH_TOKEN found in environment variables, use putenv to set one");
+    /**
+     * Creates a new instance of this class.
+     */
+    public function __construct()
+    {
+        $token = getenv('CALIWATCH_TOKEN');
+        if ($token === false || strlen($token) === 0) {
+            throw new InvalidTokenException("No CALIWATCH_TOKEN found in environment variables, use putenv to set one");
+        }
+        $this->guzzle = new Client([
+        'base_uri' => 'http://caliwatch-2.calidev.in/',
+        'timeout' => 0,
+        'allow_redirects' => false,
+        'headers' => ['Caliwatch-Token' => $token],
+        ]);
     }
-    $this->guzzle = new Client([
-      'base_uri' => 'http://caliwatch-2.calidev.in/',
-      'timeout' => 0,
-      'allow_redirects' => FALSE,
-      'headers' => ['Caliwatch-Token' => $token],
-    ]);
-  }
 
-  /**
-   * Sends a trigger to caliwatch.
-   *
-   * These triggers can be sent directly to slack and should be used for
-   * notifications only, try to limit the amount of triggers to reduce
-   * notification fatigue.
-   *
-   * @param string $message
-   *   The message to send.
-   * @param string $type
-   *   The severity/type of trigger to log in caliwatch. Will determine what
-   *   color/icon will be used in slack for example. Possible values are:
-   *   success|info|warning|error|critical|reminder.
-   *   Defaults to error.
-   */
-  public function sendTrigger(string $message, string $type = 'error') : void {
-    $contents = [
-      'type' => $type,
-      'message' => $message,
-    ];
-    $this->sendArbitraryJson('/api/trigger', $contents);
-  }
+    /**
+     * Sends a trigger to caliwatch.
+     *
+     * These triggers can be sent directly to slack and should be used for
+     * notifications only, try to limit the amount of triggers to reduce
+     * notification fatigue.
+     *
+     * @param string $message
+     *   The message to send.
+     * @param string $type
+     *   The severity/type of trigger to log in caliwatch. Will determine what
+     *   color/icon will be used in slack for example. Possible values are:
+     *   success|info|warning|error|critical|reminder.
+     *   Defaults to error.
+     */
+    public function sendTrigger(string $message, string $type = 'error') : void
+    {
+        $contents = [
+        'type' => $type,
+        'message' => $message,
+        ];
+        $this->sendArbitraryJson('/api/trigger', $contents);
+    }
 
-  /**
-   * Send an event to caliwatch.
-   *
-   * Events are things that are monitored and can trigger automatic slack
-   * messages/notifications. These are all handled by the caliwatch server.
-   *
-   * @param string $eventName
-   *   The name of the event we're updating for.
-   * @param string $value
-   *   The value of this event, as a string.
-   */
-  public function sendEvent(string $eventName, string $value) : void {
-    $contents = [
-      'event' => $eventName,
-      'value' => $value,
-    ];
-    $this->sendArbitraryJson('/api/event', $contents);
-  }
+    /**
+     * Send an event to caliwatch.
+     *
+     * Events are things that are monitored and can trigger automatic slack
+     * messages/notifications. These are all handled by the caliwatch server.
+     *
+     * @param string $eventName
+     *   The name of the event we're updating for.
+     * @param string $value
+     *   The value of this event, as a string.
+     */
+    public function sendEvent(string $eventName, string $value) : void
+    {
+        $contents = [
+        'event' => $eventName,
+        'value' => $value,
+        ];
+        $this->sendArbitraryJson('/api/event', $contents);
+    }
 
-  /**
-   * Send arbitrary data as json to an endpoint on the backend.
-   *
-   * @param string $endpoint
-   *    The name of the endpoint to send data to.
-   * @param array $json
-   *    The array data to send, will be json_encoded before sending.
-   */
-  public function sendArbitraryJson(string $endpoint, array $json = []) : void {
-    $this->guzzle->post($endpoint, ['body' => json_encode($json)]);
-  }
-
+    /**
+     * Send arbitrary data as json to an endpoint on the backend.
+     *
+     * @param string $endpoint
+     *   The name of the endpoint to send data to.
+     * @param array $json
+     *   The array data to send, will be json_encoded before sending.
+     */
+    public function sendArbitraryJson(string $endpoint, array $json = []) : void
+    {
+        $this->guzzle->post($endpoint, ['body' => json_encode($json)]);
+    }
 }

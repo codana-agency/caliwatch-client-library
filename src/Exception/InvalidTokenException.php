@@ -2,6 +2,10 @@
 
 namespace calibrate\caliwatch\client\Exception;
 
-class InvalidTokenException extends \InvalidArgumentException {
+/**
+ * Exception when a token is not set, or not correct.
+ */
+class InvalidTokenException extends \InvalidArgumentException
+{
 
 }
