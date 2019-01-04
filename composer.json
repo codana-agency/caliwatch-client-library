@@ -9,7 +9,7 @@
         "psr-4": {
             "calibrate\\caliwatch\\client\\": "src/"
         }
-    }
+    },
     "authors": [
         {
             "name": "Steven Van den Hout",
