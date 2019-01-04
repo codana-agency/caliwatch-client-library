@@ -29,7 +29,7 @@ class DrupalWatch extends DefaultClient {
    * This is usually the same as when we deploy, but not always.
    */
   public function sendConfigImportedEvent() : void {
-    $this->sendEvent('drupal:config-import', time());
+    $this->sendEvent('drupal:config-import', (string) time());
   }
 
 }
