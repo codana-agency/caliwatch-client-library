@@ -31,6 +31,9 @@ class DefaultClient extends ClientBase
 
     /**
      * Send a trigger when a fatal error is registred.
+     *
+     * @param string $message
+     *   The error message that occurred, and that we should push to caliwatch.
      */
     public function sendFatalErrorTrigger(string $message) : void
     {
