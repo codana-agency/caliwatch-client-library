@@ -33,4 +33,15 @@ class DrupalWatch extends DefaultClient
     {
         $this->sendEvent('drupal:config-import', (string) time());
     }
+
+    /**
+     * Send an event with drupal data.
+     *
+     * @param array $data
+     *   Send data about drupal usage.
+     */
+    public function sendDrupalUsageData(array $data = []) : void
+    {
+        $this->sendEvent('drupal:usage-data', json_encode($data));
+    }
 }
