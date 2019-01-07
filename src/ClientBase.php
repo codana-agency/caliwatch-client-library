@@ -20,6 +20,11 @@ abstract class ClientBase
 
     /**
      * Creates a new instance of this class.
+     *
+     * Throws an error when CALIWATCH_TOKEN can not be found in the environment
+     * variables. For settings this token, open settings.local.php (or another
+     * settings file) and use `putenv('CALIWATCH_TOKEN=token');` to set the
+     * token.
      */
     public function __construct()
     {
