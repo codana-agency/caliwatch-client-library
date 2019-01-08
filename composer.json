@@ -1,5 +1,5 @@
 {
-    "name": "calibrate/caliwatch_client",
+    "name": "calibrate/caliwatch_lib",
     "description": "A client for the CaliWatch 2.0 API",
     "type": "library",
     "require": {
