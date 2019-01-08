@@ -19,28 +19,6 @@ abstract class ClientBase
     private $guzzle;
 
     /**
-     * Creates a new instance of this class.
-     *
-     * Throws an error when CALIWATCH_TOKEN can not be found in the environment
-     * variables. For settings this token, open settings.local.php (or another
-     * settings file) and use `putenv('CALIWATCH_TOKEN=token');` to set the
-     * token.
-     */
-    public function __construct()
-    {
-        $token = getenv('CALIWATCH_TOKEN');
-        if ($token === false || strlen($token) === 0) {
-            throw new InvalidTokenException("No CALIWATCH_TOKEN found in environment variables, use putenv to set one");
-        }
-        $this->guzzle = new Client([
-        'base_uri' => 'http://caliwatch-2.calidev.in/',
-        'timeout' => 0,
-        'allow_redirects' => false,
-        'headers' => ['Caliwatch-Token' => $token],
-        ]);
-    }
-
-    /**
      * Sends a trigger to caliwatch.
      *
      * These triggers can be sent directly to slack and should be used for
@@ -94,6 +72,35 @@ abstract class ClientBase
      */
     public function sendArbitraryJson(string $endpoint, array $json = []) : void
     {
-        $this->guzzle->post($endpoint, ['body' => json_encode($json)]);
+        $this->getTransport()->post($endpoint, ['body' => json_encode($json)]);
+    }
+
+    /**
+     * Gets the transport (guzzle), for sending data to remote.
+     *
+     * Throws an error when CALIWATCH_TOKEN can not be found in the environment
+     * variables. For settings this token, open settings.local.php (or another
+     * settings file) and use `putenv('CALIWATCH_TOKEN=token');` to set the
+     * token.
+     */
+    protected function getTransport() : Client
+    {
+        // Guzzle has already been created and statically cached, so return it.
+        if ($this->guzzle !== null) {
+            return $this->guzzle;
+        }
+
+        $token = getenv('CALIWATCH_TOKEN');
+        if ($token === false || strlen($token) === 0) {
+            throw new InvalidTokenException("No CALIWATCH_TOKEN found in environment variables, use putenv to set one");
+        }
+        $this->guzzle = new Client([
+            'base_uri' => 'http://caliwatch-2.calidev.in/',
+            'timeout' => 0,
+            'allow_redirects' => false,
+            'headers' => ['Caliwatch-Token' => $token],
+        ]);
+
+        return $this->guzzle;
     }
 }
