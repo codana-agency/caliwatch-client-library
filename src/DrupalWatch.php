@@ -44,4 +44,20 @@ class DrupalWatch extends DefaultClient
     {
         $this->sendEvent('drupal:usage-data', json_encode($data));
     }
+
+    /**
+     * Sends a list of enabled modules for drupal 7.
+     *
+     * This is only used for drupal 7, for newer drupal versions, we can use the
+     * more global sendComposerData method.
+     *
+     * @see ::sendComposerData
+     *
+     * @param array $modules
+     *   An array of enabled modules.
+     */
+    public function sendDrupal7Modules(array $modules) : void
+    {
+        $this->sendEvent('drupal-7:modules', $modules);
+    }
 }
