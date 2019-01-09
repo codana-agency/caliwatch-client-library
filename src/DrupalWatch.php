@@ -42,7 +42,7 @@ class DrupalWatch extends DefaultClient
      */
     public function sendDrupalUsageData(array $data = []) : void
     {
-        $this->sendEvent('drupal:usage-data', json_encode($data));
+        $this->sendEvent('drupal:usage-data', $data);
     }
 
     /**
