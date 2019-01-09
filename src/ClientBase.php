@@ -47,10 +47,10 @@ abstract class ClientBase
      *
      * @param string $eventName
      *   The name of the event we're updating for.
-     * @param string $value
-     *   The value of this event, as a string.
+     * @param mixed $value
+     *   The value of this event.
      */
-    public function sendEvent(string $eventName, string $value) : void
+    public function sendEvent(string $eventName, $value) : void
     {
         $contents = ['event' => $eventName, 'value' => $value];
         $this->sendArbitraryJson('/api/event', $contents);
