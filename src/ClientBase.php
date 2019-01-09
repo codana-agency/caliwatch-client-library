@@ -35,10 +35,7 @@ abstract class ClientBase
      */
     public function sendTrigger(string $message, string $type = 'error') : void
     {
-        $contents = [
-        'type' => $type,
-        'message' => $message,
-        ];
+        $contents = ['type' => $type, 'message' => $message];
         $this->sendArbitraryJson('/api/trigger', $contents);
     }
 
@@ -55,10 +52,7 @@ abstract class ClientBase
      */
     public function sendEvent(string $eventName, string $value) : void
     {
-        $contents = [
-        'event' => $eventName,
-        'value' => $value,
-        ];
+        $contents = ['event' => $eventName, 'value' => $value];
         $this->sendArbitraryJson('/api/event', $contents);
     }
 
