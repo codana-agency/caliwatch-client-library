@@ -66,7 +66,13 @@ abstract class ClientBase
      */
     public function sendArbitraryJson(string $endpoint, array $json = []) : void
     {
-        $this->getTransport()->post($endpoint, ['body' => json_encode($json)]);
+        try {
+          $this->getTransport()
+            ->post($endpoint, ['body' => json_encode($json)]);
+        } catch (\Exception $e) {
+          // When an exception happens, we should just silently fail instead of
+          // letting the exception bubble up.
+        }
     }
 
     /**
