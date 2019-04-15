@@ -95,7 +95,7 @@ abstract class ClientBase
             throw new InvalidTokenException("No CALIWATCH_TOKEN found in environment variables, use putenv to set one");
         }
         $this->guzzle = new Client([
-            'base_uri' => 'http://caliwatch-2.calidev.in/',
+            'base_uri' => 'https://calibrate:cali@staging.caliwatch-2-0.gcecc.be',
             'timeout' => 0,
             'allow_redirects' => false,
             'headers' => ['Caliwatch-Token' => $token],
