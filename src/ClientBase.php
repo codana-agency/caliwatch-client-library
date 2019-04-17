@@ -98,7 +98,7 @@ abstract class ClientBase
             'base_uri' => 'https://calibrate:cali@staging.caliwatch-2-0.gcecc.be',
             'timeout' => 0,
             'allow_redirects' => false,
-            'headers' => ['Caliwatch-Token' => $token],
+            'headers' => ['X-PROJECT-TOKEN' => $token],
         ]);
 
         return $this->guzzle;
