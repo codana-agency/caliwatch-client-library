@@ -61,6 +61,20 @@ abstract class ClientBase
     }
 
     /**
+     * Send a dm to $slackid with $message.
+     *
+     * @param string $message
+     *   The message we want to send.
+     * @param string $slack_id
+     *   The slack id/username to send a message to.
+     */
+    public function sendDM(string $message, string $slack_id) : void
+    {
+        $contents = ['event' => 'dm', 'value' => $message, 'slack_id' => $slack_id];
+        $this->sendArbitraryJson('/api/dm', $contents);
+    }
+
+    /**
      * Send arbitrary data as json to an endpoint on the backend.
      *
      * @param string $endpoint
