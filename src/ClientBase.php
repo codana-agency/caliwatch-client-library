@@ -34,12 +34,12 @@ abstract class ClientBase
      *   The type of trigger to log in caliwatch.
      * @param string $severity
      *   The severity of the trigger, this will determine what icon will
-     *   be used in slack. Possible values are: info/notice/warning/alert.
+     *   be used in slack. Possible values are: info/notice/warning/error.
      *   Defaults to info.
      */
     public function sendTrigger(string $message, string $type, string $severity = 'info') : void
     {
-        $contents = ['event' => $type, 'message' => $message, 'severity' => $severity];
+        $contents = ['event' => $type, 'value' => $message, 'severity' => $severity];
         $this->sendArbitraryJson('/api/trigger', $contents);
     }
 
