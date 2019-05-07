@@ -37,7 +37,11 @@ class DefaultClient extends ClientBase
      */
     public function sendFatalErrorTrigger(string $message) : void
     {
-        $contents = ['event' => 'php:error-message', 'value' => $message];
+        $contents = [
+            'event' => 'php:error-message',
+            'value' => $message,
+            'severity' => 'warning',
+        ];
         $this->sendArbitraryJson('/api/trigger', $contents);
     }
 }

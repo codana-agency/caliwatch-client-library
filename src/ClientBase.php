@@ -24,18 +24,22 @@ abstract class ClientBase
      * These triggers can be sent directly to slack and should be used for
      * notifications only, try to limit the amount of triggers to reduce
      * notification fatigue.
+     * For the severity, we will use emoji in slack to indicate how broken
+     * the site is. Only use the alert level for a site that is actually
+     * offline/non-functional (eg mollie is not responding).
      *
      * @param string $message
      *   The message to send.
      * @param string $type
-     *   The severity/type of trigger to log in caliwatch. Will determine what
-     *   color/icon will be used in slack for example. Possible values are:
-     *   success|info|warning|error|critical|reminder.
-     *   Defaults to error.
+     *   The type of trigger to log in caliwatch.
+     * @param string $severity
+     *   The severity of the trigger, this will determine what icon will
+     *   be used in slack. Possible values are: info/notice/warning/alert.
+     *   Defaults to info.
      */
-    public function sendTrigger(string $message, string $type = 'error') : void
+    public function sendTrigger(string $message, string $type, string $severity = 'info') : void
     {
-        $contents = ['type' => $type, 'message' => $message];
+        $contents = ['event' => $type, 'message' => $message, 'severity' => $severity];
         $this->sendArbitraryJson('/api/trigger', $contents);
     }
 
