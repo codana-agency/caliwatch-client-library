@@ -84,6 +84,13 @@ abstract class ClientBase
      */
     public function sendArbitraryJson(string $endpoint, array $json = []) : void
     {
+
+        $token = getenv('CALIWATCH_TOKEN');
+        // No token was configured. Silently fail, the reporting in slack will
+        // push this to the user.
+        if ($token === false || strlen($token) === 0) {
+          return;
+        }
         try {
           $this->getTransport()
             ->post($endpoint, ['body' => json_encode($json)]);
