@@ -60,12 +60,4 @@ class DrupalWatch extends DefaultClient
     {
         $this->sendEvent('drupal-7:modules', $modules);
     }
-
-    /**
-     * Sends a ping command.
-     */
-    public function sendPingCommand() : void
-    {
-        $this->sendEvent('ping', date('Y-m-d'));
-    }
 }

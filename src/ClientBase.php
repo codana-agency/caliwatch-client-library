@@ -75,6 +75,14 @@ abstract class ClientBase
     }
 
     /**
+     * Sends a ping command.
+     */
+    public function sendPingCommand() : void
+    {
+        $this->sendEvent('ping', date('Y-m-d'));
+    }
+
+    /**
      * Send arbitrary data as json to an endpoint on the backend.
      *
      * @param string $endpoint
