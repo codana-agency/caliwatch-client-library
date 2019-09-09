@@ -124,16 +124,18 @@ abstract class ClientBase
         }
 
         $token = getenv('CALIWATCH_TOKEN');
+        $base_url = getenv('CALIWATCH_BASE_URL');
         if ($token === false || strlen($token) === 0) {
             throw new InvalidTokenException("No CALIWATCH_TOKEN found in environment variables, use putenv to set one");
         }
         $this->guzzle = new Client([
-            'base_uri' => 'https://calibrate:cali@staging.caliwatch-2-0.gcecc.be',
-            'timeout' => 0,
-            'allow_redirects' => false,
-            'headers' => ['X-PROJECT-TOKEN' => $token],
+          'base_uri' => $base_url ?: "https://calibrate:cali@staging.caliwatch-2-0.gcecc.be",
+          'timeout' => 0,
+          'allow_redirects' => false,
+          'headers' => ['X-PROJECT-TOKEN' => $token],
         ]);
 
         return $this->guzzle;
     }
+
 }
