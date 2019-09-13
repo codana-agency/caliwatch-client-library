@@ -1,4 +1,4 @@
-<?php declare(strict_types = 1);
+<?php declare(strict_types=1);
 
 namespace calibrate\caliwatch\client;
 
@@ -11,19 +11,21 @@ class DefaultClient extends ClientBase
     /**
      * Send the contents of the composer.lock file.
      *
-     * @param string $lockfileContents
+     * @param  string  $lockfileContents
      *   The contents of the composer.lock file.
      */
-    public function sendComposerData(string $lockfileContents) : void
+    public function sendComposerData(string $lockfileContents): void
     {
-        $contents = ['event' => 'php:send-composer-versions', 'value' => $lockfileContents];
+        $contents = [
+          'event' => 'php:send-composer-versions', 'value' => $lockfileContents,
+        ];
         $this->sendArbitraryJson('/api/event', $contents);
     }
 
     /**
      * Send an event when the cron is started.
      */
-    public function sendCronStartedEvent() : void
+    public function sendCronStartedEvent(): void
     {
         $contents = ['event' => 'php:cron-ran', 'value' => (string) time()];
         $this->sendArbitraryJson('/api/event', $contents);
@@ -32,16 +34,19 @@ class DefaultClient extends ClientBase
     /**
      * Send a trigger when a fatal error is registred.
      *
-     * @param string $message
+     * @param  \calibrate\caliwatch\client\string  $message
      *   The error message that occurred, and that we should push to caliwatch.
+     * @param  \calibrate\caliwatch\client\int  $level
+     *   The severity level of the message.
      */
-    public function sendFatalErrorTrigger(string $message) : void
+    public function sendFatalErrorTrigger(string $message, int $level): void
     {
         $contents = [
-            'event' => 'php:error-message',
-            'value' => $message,
-            'severity' => 'warning',
+          'event' => 'php:error-message',
+          'value' => $message,
+          'severity' => $level,
         ];
         $this->sendArbitraryJson('/api/trigger', $contents);
     }
+
 }
