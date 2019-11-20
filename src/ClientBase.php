@@ -71,7 +71,7 @@ abstract class ClientBase
     public function sendDM(string $message, string $slack_id) : void
     {
         $contents = ['event' => 'dm', 'value' => $message, 'slack_id' => $slack_id];
-        $this->sendArbitraryJson('/api/dm', $contents);
+        $this->sendArbitraryJson('/slack/dm', $contents);
     }
 
     /**
