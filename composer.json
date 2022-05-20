@@ -2,9 +2,9 @@
     "name": "calibrate/caliwatch_lib",
     "description": "A client for the CaliWatch 2.0 API",
     "type": "library",
-    "version": "0.7.6",
+    "version": "0.7.7",
     "require": {
-        "guzzlehttp/guzzle": "^6.2.1"
+        "guzzlehttp/guzzle": "^6.2.1|^7.2"
     },
     "autoload": {
         "psr-4": {
