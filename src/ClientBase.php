@@ -105,7 +105,7 @@ abstract class ClientBase
         } catch (\Exception $e) {
           // When an exception happens, we should just silently fail instead of
           // letting the exception bubble up.
-          $e->getMessage();
+          \Drupal::logger('caliwatch')->error('Error sending data to caliwatch: ' . $e->getMessage());
         }
     }
 
