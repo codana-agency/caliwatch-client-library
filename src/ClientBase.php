@@ -97,7 +97,7 @@ abstract class ClientBase
         // No token was configured. Silently fail, the reporting in slack will
         // push this to the user.
         if ($token === false || strlen($token) === 0) {
-          return;
+          \Drupal::logger('caliwatch')->error('No CALIWATCH_TOKEN found in environment variables, use putenv to set one');
         }
         try {
           $this->getTransport()
@@ -105,6 +105,7 @@ abstract class ClientBase
         } catch (\Exception $e) {
           // When an exception happens, we should just silently fail instead of
           // letting the exception bubble up.
+          $e->getMessage();
         }
     }
 
