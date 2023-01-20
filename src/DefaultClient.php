@@ -31,12 +31,30 @@ class DefaultClient extends ClientBase
         $this->sendArbitraryJson('/api/event', $contents);
     }
 
+  /**
+   * Send an event when a cron (job) is finished.
+   *
+   * Intended for Drupal with Ultimate Cron module.
+   *
+   * @param array $additional
+   *   Additional data to send with the event.
+   */
+  public function sendCronFinishedEvent(array $additional): void
+  {
+    $contents = [
+      'event' => 'php:ultimate-cron-ran',
+      'value' => (string) time(),
+      'additional' => $additional,
+    ];
+    $this->sendArbitraryJson('/api/event', $contents);
+  }
+
     /**
      * Send a trigger when a fatal error is registred.
      *
-     * @param  \calibrate\caliwatch\client\string  $message
+     * @param string $message
      *   The error message that occurred, and that we should push to caliwatch.
-     * @param  \calibrate\caliwatch\client\int  $level
+     * @param int $level
      *   The severity level of the message.
      */
     public function sendFatalErrorTrigger(string $message, int $level): void
