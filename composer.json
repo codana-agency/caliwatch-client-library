@@ -4,12 +4,22 @@
     "type": "library",
     "version": "0.7.9",
     "require": {
-        "guzzlehttp/guzzle": "^6.2.1|^7.2"
+        "php": "^8.1",
+        "guzzlehttp/guzzle": "^6.2.1|^7.2",
+        "illuminate/console": "^10.3",
+        "illuminate/support": "^10.3"
     },
     "autoload": {
         "psr-4": {
             "calibrate\\caliwatch\\client\\": "src/"
         }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "config": {
+        "sort-packages": true,
+        "preferred-install": "dist",
+        "optimize-autoloader": true
     },
     "authors": [
         {
@@ -20,5 +30,12 @@
             "name": "Joris Vercammen",
             "email": "joris.vercammen@calibrate.be"
         }
-    ]
+    ],
+    "extra": {
+        "laravel": {
+            "providers": [
+                "calibrate\\caliwatch\\client\\Providers\\CaliwatchClientServiceProvider"
+            ]
+        }
+    }
 }
