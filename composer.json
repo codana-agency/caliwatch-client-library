@@ -4,7 +4,7 @@
     "type": "library",
     "version": "0.7.9",
     "require": {
-        "php": "^8.1",
+        "php": "^8.0|^8.1",
         "guzzlehttp/guzzle": "^6.2.1|^7.2",
         "illuminate/console": "^10.3",
         "illuminate/support": "^10.3"
