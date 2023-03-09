@@ -10,7 +10,7 @@ use Illuminate\Console\Command;
 
 class SendPingCommand extends Command
 {
-    protected $signature = "caliwatch:send-ping";
+    protected $signature = "caliwatch:send-ping-client";
 
     protected $description = "Sends ping to caliwatch";
 
