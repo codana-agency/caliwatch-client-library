@@ -10,7 +10,7 @@ use Illuminate\Console\Command;
 
 class SendComposerDataCommand extends Command
 {
-    protected $signature = "caliwatch:send-composer";
+    protected $signature = "caliwatch:send-composer-client";
 
     protected $description = "Sends composer.lock data to caliwatch";
 

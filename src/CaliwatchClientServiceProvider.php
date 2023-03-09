@@ -33,7 +33,7 @@ final class CaliwatchClientServiceProvider extends ServiceProvider
             );
         }
         $this->callAfterResolving(Schedule::class, function (Schedule $schedule) {
-            $schedule->command('caliwatch:send-ping')->everyTwoHours();
+            $schedule->command('caliwatch:send-ping-client')->everyTwoHours();
         });
     }
 }
