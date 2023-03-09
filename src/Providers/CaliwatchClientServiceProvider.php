@@ -14,7 +14,7 @@ final class CaliwatchClientServiceProvider extends ServiceProvider
 {
     public function register()
     {
-        $this->mergeConfigFrom(__DIR__ . '/../config/config.php', 'caliwatch');
+        $this->mergeConfigFrom(__DIR__ . '/../../config/config.php', 'caliwatch');
     }
 
     public function boot(): void
