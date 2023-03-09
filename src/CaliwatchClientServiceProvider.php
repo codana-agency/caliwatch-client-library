@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace calibrate\caliwatch\client\Providers;
+namespace calibrate\caliwatch\client;
 
 use calibrate\caliwatch\client\Console\InstallCaliwatchClientCommand;
 use calibrate\caliwatch\client\Console\SendComposerDataCommand;
