@@ -18,7 +18,7 @@ class InstallCaliwatchClientCommand extends Command
         $this->info("Publishing caliwatch configuration...");
 
         $this->call('vendor:publish', [
-            '--provider' => "calibrate\caliwatch\client\Providers\CaliwatchClientServiceProvider",
+            '--provider' => "calibrate\caliwatch\client\CaliwatchClientServiceProvider",
             '--tag' => "config"
         ]);
 
