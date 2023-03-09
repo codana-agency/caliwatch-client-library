@@ -34,7 +34,7 @@
     "extra": {
         "laravel": {
             "providers": [
-                "calibrate\\caliwatch\\client\\Providers\\CaliwatchClientServiceProvider"
+                "calibrate\\caliwatch\\client\\CaliwatchClientServiceProvider"
             ]
         }
     }
